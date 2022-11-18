@@ -55,16 +55,8 @@ Auto.cr34c_credit = (function() {
             let isEndBiggerThanStart = isEndDateBigger(context);
             if (isEndBiggerThanStart == false) {
                 showAlert();
-            } else {
-                let saveOptions = context.getEventArgs().getSaveMode();
-                formContext.data.save(saveOptions).then( 
-                    function (success) {
-                    console.log(success);
-                },
-                    function (error) {
-                        console.log(error.message);
-                });
-            }
+                context.getEventArgs().preventDefault();
+            } 
         }
     }
 })();

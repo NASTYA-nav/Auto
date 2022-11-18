@@ -13,37 +13,42 @@ Auto.cr34c_communication = (function() {
         formContext.getControl("cr34c_email").setVisible(false);
     }
 
-    var showCommunications = function(context) {
+    var showCommunication = function(context) {
+        debugger;
         let formContext = context.getFormContext();
         let typeAttr = formContext.getAttribute("cr34c_type").getValue();
+        var phone = formContext.getControl("cr34c_phone");
+        var email = formContext.getControl("cr34c_email");
 
         if (typeAttr == type.email) {
-            formContext.getControl("cr34c_email").setVisible(true);
-            formContext.getControl("cr34c_phone").setVisible(false);
+            email.setVisible(true);
+            phone.setVisible(false);
         }
 
         if (typeAttr == type.phone) {
-            formContext.getControl("cr34c_phone").setVisible(true);
-            formContext.getControl("cr34c_email").setVisible(false);
+            phone.setVisible(true);
+            email.setVisible(false);
         }
 
         if (typeAttr == null) {
-            formContext.getControl("cr34c_phone").setVisible(false);
-            formContext.getControl("cr34c_email").setVisible(false);
+            phone.setVisible(false);
+            email.setVisible(false);
         }
     }
 
     return {
         onLoad : function(context){
+            debugger;
             let formContext = context.getFormContext();
             let typeAttr = formContext.getAttribute("cr34c_type");
+            var formType = formContext.ui.getFormType();
 
             //if create
-            if (typeAttr == null) {
+            if (formType == 1) {
                 hideFields(context);
             }
 
-            typeAttr.addOnChange( showCommunications );
+            typeAttr.addOnChange( showCommunication );
         }
     }
 })();

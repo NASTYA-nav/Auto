@@ -12,14 +12,18 @@ Auto.cr34c_auto = (function() {
     var showUsedFields = function(context) {
         let formContext = context.getFormContext();
         let usedAttr = formContext.getAttribute("cr34c_used").getValue();
+        var km = formContext.getControl("cr34c_km");
+        var ownerscount = formContext.getControl("cr34c_ownerscount");
+        var isdamaged = formContext.getControl("cr34c_isdamaged");
+
         if (usedAttr == true) {
-            formContext.getControl("cr34c_km").setVisible(true);
-            formContext.getControl("cr34c_ownerscount").setVisible(true);
-            formContext.getControl("cr34c_isdamaged").setVisible(true);
+            km.setVisible(true);
+            ownerscount.setVisible(true);
+            isdamaged.setVisible(true);
         } else {
-            formContext.getControl("cr34c_km").setVisible(false);
-            formContext.getControl("cr34c_ownerscount").setVisible(false);
-            formContext.getControl("cr34c_isdamaged").setVisible(false);
+            km.setVisible(false);
+            ownerscount.setVisible(false);
+            isdamaged.setVisible(false);
         }
 
     }
