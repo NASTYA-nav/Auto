@@ -8,9 +8,11 @@ Auto.cr34c_agreement = (function() {
         formContext.getControl("cr34c_summa").setVisible(false);
         formContext.getControl("cr34c_fact").setVisible(false);
         formContext.getControl("cr34c_creditid").setVisible(false);
+        Xrm.Page.ui.tabs.get("tab_2_credit").setVisible(false);
     }
 
     var visibleCreditTab = function(context) {
+        debugger;
         let formContext = context.getFormContext();
         let contactAttr = formContext.getAttribute("cr34c_contact");
         let autoidAttr = formContext.getAttribute("cr34c_autoid");
@@ -95,7 +97,7 @@ Auto.cr34c_agreement = (function() {
             let creditidAttr = formContext.getAttribute("cr34c_creditid");
             let numberAgreementAttr = formContext.getAttribute("cr34c_number_agreement");
             var formType = formContext.ui.getFormType();
-            Xrm.Page.ui.tabs.get("tab_2_credit").setVisible(false);
+            visibleCreditTab(context);
 
             // If create
             if (formType == 1) {
