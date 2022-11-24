@@ -19,9 +19,9 @@ Auto.cr34c_credit = (function() {
     }
 
     var isEndDateBigger = function(context) {
-        let formContext = context.getFormContext();
-        let dateStartAttr = formContext.getAttribute("cr34c_datestart").getValue();
-        let dateEndAttr = formContext.getAttribute("cr34c_dateend").getValue();
+        var formContext = context.getFormContext();
+        var dateStartAttr = formContext.getAttribute("cr34c_datestart").getValue();
+        var dateEndAttr = formContext.getAttribute("cr34c_dateend").getValue();
         var startDate = new Date(dateStartAttr); 
         startDate.setFullYear(startDate.getFullYear() + 1);
 
@@ -33,7 +33,7 @@ Auto.cr34c_credit = (function() {
     }
 
     var onDateChange = function(context) {
-        let isEndBiggerThanStart = isEndDateBigger(context);
+        var isEndBiggerThanStart = isEndDateBigger(context);
 
         if (isEndBiggerThanStart == false) {
             showAlert();
@@ -42,17 +42,15 @@ Auto.cr34c_credit = (function() {
 
     return {
         onLoad : function(context){
-            let formContext = context.getFormContext();
-            let dateStartAttr = formContext.getAttribute("cr34c_datestart");
-            let dateEndAttr = formContext.getAttribute("cr34c_dateend");
+            var formContext = context.getFormContext();
+            var dateStartAttr = formContext.getAttribute("cr34c_datestart");
+            var dateEndAttr = formContext.getAttribute("cr34c_dateend");
 
             dateStartAttr.addOnChange( onDateChange );
             dateEndAttr.addOnChange( onDateChange );
         },
         onSave : function(context){
-            debugger;
-            let formContext = context.getFormContext();
-            let isEndBiggerThanStart = isEndDateBigger(context);
+            var isEndBiggerThanStart = isEndDateBigger(context);
             if (isEndBiggerThanStart == false) {
                 showAlert();
                 context.getEventArgs().preventDefault();

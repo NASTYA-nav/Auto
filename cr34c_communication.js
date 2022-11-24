@@ -5,18 +5,18 @@ Auto.cr34c_communication = (function() {
     const type = {
         "phone": 290040000,
         "email": 290040001
-        };
+    };
 
     var hideFields = function(context) {
-        let formContext = context.getFormContext();
+        var formContext = context.getFormContext();
         formContext.getControl("cr34c_phone").setVisible(false);
         formContext.getControl("cr34c_email").setVisible(false);
     }
 
     var showCommunication = function(context) {
         debugger;
-        let formContext = context.getFormContext();
-        let typeAttr = formContext.getAttribute("cr34c_type").getValue();
+        var formContext = context.getFormContext();
+        var typeAttr = formContext.getAttribute("cr34c_type").getValue();
         var phone = formContext.getControl("cr34c_phone");
         var email = formContext.getControl("cr34c_email");
 
@@ -39,8 +39,8 @@ Auto.cr34c_communication = (function() {
     return {
         onLoad : function(context){
             debugger;
-            let formContext = context.getFormContext();
-            let typeAttr = formContext.getAttribute("cr34c_type");
+            var formContext = context.getFormContext();
+            var typeAttr = formContext.getAttribute("cr34c_type");
             var formType = formContext.ui.getFormType();
 
             //if create

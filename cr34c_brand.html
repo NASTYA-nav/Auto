@@ -1,0 +1,105 @@
+<html>
+    <head>
+        <script src="ClientGlobalContext.js.aspx" type="text/javascript"></script>
+        <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script>
+            document.onreadystatechange = function() {
+                if (document.readyState == "complete") {
+                    onDocumentLoad();
+                }
+            }
+
+            function OuterCall(formContext) {
+                debugger;
+                var creditId = formContext.data.entity.getId();
+                var fetchXml = "?fetchXml=<fetch version='1.0' output-format='xml-platform' mapping='logical' distinct='true' >" +
+                            "<entity name='cr34c_credit' >" +
+                                "<attribute name='cr34c_creditid' />" +
+                                "<attribute name='cr34c_name' />" +
+                                "<attribute name='cr34c_creditperiod' />" +
+                                "<order attribute='cr34c_name' descending='false' />" +
+                                "<link-entity name='cr34c_agreement' from='cr34c_creditid' to='cr34c_creditid' link-type='inner' alias='by' >" +
+                                    "<link-entity name='cr34c_auto' from='cr34c_autoid' to='cr34c_autoid' link-type='inner' alias='bz' >" +
+                                        "<filter type='and' >" +
+                                            "<condition attribute='cr34c_brandid' operator='eq' uiname='new' uitype='cr34c_brand' value='" + creditId +"' />" +
+                                        "</filter>" +
+                                        "<link-entity name='cr34c_model' from='cr34c_modelid' to='cr34c_modelid' link-type='inner' alias='ca' >" +
+                                            "<filter type='and' >" +
+                                                "<condition attribute='cr34c_name' operator='not-null' />" +
+                                            "</filter>" +
+                                        "</link-entity>" +
+                                    "</link-entity>" +
+                                "</link-entity>" +
+                            "</entity>" +
+                        "</fetch>";
+
+                    Xrm.WebApi.retrieveMultipleRecords("cr34c_credit", fetchXml).then(
+                        function success(result) {
+                            debugger;
+                            for (var i in result.entities) {
+                                debugger;
+                                var creditTableBody = $('#creditTableBody');
+                                creditTableBody.append(`<tr>
+                                <td><a href="#" onclick='onRecordClick("cr34c_credit", "${result.entities[i].cr34c_creditid}")'>${result.entities[i].cr34c_name}</a></td>
+                                <td>${result.entities[i].cr34c_name}</td>
+                                <td>${result.entities[i].creditperiod}</td>
+                                </tr>`);
+                            }                  
+                        },
+                        function (error) {
+                            console.log(error.message);
+                        }
+                    );
+                }
+
+                var onRecordClick = function(entityName, entityId) {
+                    debugger;
+                    
+                    var pageInput = {
+                        pageType: "entityrecord",
+                        entityName: entityName,
+                        entityId: entityId
+                    };
+                    var navigationOptions = {
+                        target: 2,
+                        height: {value: 80, unit:"%"},
+                        width: {value: 70, unit:"%"},
+                        position: 1
+                    };
+                    Xrm.Navigation.navigateTo(pageInput, navigationOptions).then(
+                        function (success) {
+                            console.log(success);
+                        },
+                        function (error) {
+                            console.log(error);
+                        });
+                }
+
+                var addRecords = function(context) {
+                    var creditTableBody = $('#creditTableBody');
+                    creditTableBody.append(`<option value="${option.Id}">${option.Name}</option>`);
+                }
+
+                function onDocumentLoad() {
+                    // и можно вызвать функцию формы для открытия формы или окна других обьектов из таблицы фрейма
+                    console.log(parent.Xrm.WebApi);
+                }
+            
+
+        </script>
+    </head>
+    <body>
+        <table class="table">
+            <thead class="table-light">
+                <tr>
+                    <th scope="col">Кредитная программа</th>
+                    <th scope="col">Модель</th>
+                    <th scope="col">Срок кредита</th>
+                </tr>
+            </thead>
+            <tbody id="creditTableBody">
+            </tbody>
+          </table>
+    </body>
+</html>
