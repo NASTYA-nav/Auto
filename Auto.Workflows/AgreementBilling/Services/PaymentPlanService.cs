@@ -1,10 +1,7 @@
-﻿using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Query;
-using System;
+﻿using System;
 using System.Activities;
-using System.Activities.Expressions;
-using System.IdentityModel.Metadata;
-using System.Runtime.Remoting.Contexts;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 
 namespace Auto.Workflows.AgreementBilling.Services
 {
@@ -23,11 +20,13 @@ namespace Auto.Workflows.AgreementBilling.Services
 
         public void CreatePayment(CodeActivityContext context, InArgument<EntityReference> AgrementReference)
         {
+
             var agrementRef = AgrementReference.Get(context);
 
             if (CanCreatePayment(agrementRef.Id))
             {
                 DeleteAgrementAutoInvoices(agrementRef.Id);
+                throw new Exception("isnull 2");
 
                 CreatePaymentPlan(agrementRef.Name, agrementRef.Id);
 
@@ -105,6 +104,7 @@ namespace Auto.Workflows.AgreementBilling.Services
             var columnSet = new ColumnSet("cr34c_creditperiod", "cr34c_creditamount");
 
             var agreementFromCrm = _service.Retrieve(agrementRefName, agrementRefId, columnSet);
+            throw new Exception("isnull " + (agreementFromCrm == null));
 
             int creditPeriod;
 

@@ -3,9 +3,11 @@ var Auto = Auto || {};
 Auto.cr34c_agreement_ribbon = (function() {
 
     return {
-        calculate: function(context){
-            var formContext = context.getFormContext();
-            var creditamountAttribute = formContext.getAttribute("cr34c_creditamount");
+        calculate: function(primaryControl){
+            debugger;
+            var formContext = primaryControl;
+            //var accountName = formContext.getControl("cr34c_name").getAttribute().getValue();
+            var creditamountAttribute = formContext.getAttribute("cr34c_creditamount");            var creditamountAttribute = formContext.getAttribute("cr34c_creditamount");
             var fullcreditamountAttribute = formContext.getAttribute("cr34c_fullcreditamount");
             var summaAttribute = formContext.getAttribute("cr34c_summa");
             var initialfeeAttribute = formContext.getAttribute("cr34c_initialfee");

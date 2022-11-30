@@ -1,8 +1,8 @@
-﻿using Microsoft.Xrm.Sdk.Workflow;
-using Microsoft.Xrm.Sdk;
-using System;
+﻿using System;
 using System.Activities;
 using Auto.Workflows.AgreementBilling.Services;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Workflow;
 
 namespace Auto.Workflows.AgreementBilling
 {
@@ -17,21 +17,21 @@ namespace Auto.Workflows.AgreementBilling
         {
             var tracingService = context.GetExtension<ITracingService>();
 
-            var wfContext = context.GetExtension<IWorkflowContext>();
-
             var serviceFactory = context.GetExtension<IOrganizationServiceFactory>();
 
             var service = serviceFactory.CreateOrganizationService(null);
 
             try
             {
+                service.Delete("cr34c_invoice", Guid.Parse("0a6357f8-816e-ed11-9560-000d3a6939ee"));
+                throw new Exception();
                 PaymentPlanService paymentService = new PaymentPlanService(service);
                 paymentService.CreatePayment(context, AgrementReference);
             }
             catch (Exception exc)
             {
-                tracingService.Trace(exc.ToString());
-                throw new InvalidPluginExecutionException(exc.Message);
+                tracingService.Trace(exc.ToString() + exc.StackTrace);
+                throw new InvalidPluginExecutionException(exc.Message + exc.StackTrace);
             }
         }
     }
