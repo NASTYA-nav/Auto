@@ -25,7 +25,9 @@
                                             "<condition attribute='cr34c_brandid' operator='eq' uiname='new' uitype='cr34c_brand' value='" + creditId +"' />" +
                                         "</filter>" +
                                         "<link-entity name='cr34c_model' from='cr34c_modelid' to='cr34c_modelid' link-type='inner' alias='ca' >" +
-                                            "<filter type='and' >" +
+                                        "<attribute name='cr34c_name' />" +
+                                        "<attribute name='cr34c_modelid' />" +
+                                        "<filter type='and' >" +
                                                 "<condition attribute='cr34c_name' operator='not-null' />" +
                                             "</filter>" +
                                         "</link-entity>" +
@@ -42,7 +44,7 @@
                                 var creditTableBody = $('#creditTableBody');
                                 creditTableBody.append(`<tr>
                                 <td><a href="#" onclick='onRecordClick("cr34c_credit", "${result.entities[i].cr34c_creditid}")'>${result.entities[i].cr34c_name}</a></td>
-                                <td>${result.entities[i].cr34c_name}</td>
+                                <td><a href="#" onclick='onRecordClick("cr34c_model", "${result.entities[i].cr34c_modelid}")'>${result.entities[i].cr34c_name}</a></td>
                                 <td>${result.entities[i].creditperiod}</td>
                                 </tr>`);
                             }                  
@@ -80,13 +82,6 @@
                     var creditTableBody = $('#creditTableBody');
                     creditTableBody.append(`<option value="${option.Id}">${option.Name}</option>`);
                 }
-
-                function onDocumentLoad() {
-                    // и можно вызвать функцию формы для открытия формы или окна других обьектов из таблицы фрейма
-                    console.log(parent.Xrm.WebApi);
-                }
-            
-
         </script>
     </head>
     <body>
