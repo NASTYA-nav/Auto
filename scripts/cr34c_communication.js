@@ -2,6 +2,7 @@ var Auto = Auto || {};
 
 Auto.cr34c_communication = (function() {
 
+    // Типы лукапа срества связи
     const type = {
         "phone": 290040000,
         "email": 290040001
@@ -14,7 +15,6 @@ Auto.cr34c_communication = (function() {
     }
 
     var showCommunication = function(context) {
-        debugger;
         var formContext = context.getFormContext();
         var typeAttr = formContext.getAttribute("cr34c_type").getValue();
         var phone = formContext.getControl("cr34c_phone");
@@ -38,16 +38,16 @@ Auto.cr34c_communication = (function() {
 
     return {
         onLoad : function(context){
-            debugger;
             var formContext = context.getFormContext();
             var typeAttr = formContext.getAttribute("cr34c_type");
             var formType = formContext.ui.getFormType();
 
-            //if create
+            // Если форма создания
             if (formType == 1) {
                 hideFields(context);
             }
 
+            // Показывать средство связи в зависимости от выбранного типа
             typeAttr.addOnChange( showCommunication );
         }
     }

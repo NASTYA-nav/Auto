@@ -1,13 +1,12 @@
-﻿using Auto.Plugins.cr34c_invoice.Serviseces;
+﻿using System;
+using Auto.Plugins.cr34c_invoice.Serviseces;
 using Microsoft.Xrm.Sdk;
-using System;
-using System.Runtime.Remoting.Contexts;
 
 namespace Auto.Plugins.cr34c_invoice
 {
     /// <summary>
-	/// 
-	/// </summary>
+    /// Плагин на событие пре-создания счета
+    /// </summary>
     public sealed class PreInvoiceCreate : BaseInvoicePlugin
     {
         public override void ExecuteInternal(IServiceProvider service)
@@ -16,8 +15,14 @@ namespace Auto.Plugins.cr34c_invoice
             {
                 var target = (Entity)PluginExecutionContext.InputParameters["Target"];
 
-                cr34c_CreateInvoiceService invoiceService = new cr34c_CreateInvoiceService(OrganizationService);
-                invoiceService.CreateInvoice(TracingService, target);
+                var isPayed = target.GetAttributeValue<bool>("cr34c_fact");
+
+                // Все изменения с договором и есго счетом только в лчае оплаты счета
+                if (isPayed)
+                {
+                    cr34c_CreateInvoiceService invoiceService = new cr34c_CreateInvoiceService(OrganizationService);
+                    invoiceService.CreateInvoice(TracingService, target);
+                }
             }
             catch (Exception exc)
             {

@@ -24,17 +24,21 @@ Auto.cr34c_credit = (function() {
         var dateEndAttr = formContext.getAttribute("cr34c_dateend").getValue();
         var startDate = new Date(dateStartAttr); 
         startDate.setFullYear(startDate.getFullYear() + 1);
+        var isEndBiggerThanStart;
 
-        if (dateEndAttr == startDate || dateEndAttr > startDate) {
-            return true;
+        if (dateEndAttr >= startDate) {
+            isEndBiggerThanStart = true;
         } else {
-           return false;
+            isEndBiggerThanStart = false;
         }
+
+        return isEndBiggerThanStart;
     }
 
     var onDateChange = function(context) {
         var isEndBiggerThanStart = isEndDateBigger(context);
 
+        // показывать предупредение если срок кредита меньше года
         if (isEndBiggerThanStart == false) {
             showAlert();
         }
@@ -46,11 +50,13 @@ Auto.cr34c_credit = (function() {
             var dateStartAttr = formContext.getAttribute("cr34c_datestart");
             var dateEndAttr = formContext.getAttribute("cr34c_dateend");
 
-            dateStartAttr.addOnChange( onDateChange );
-            dateEndAttr.addOnChange( onDateChange );
+            dateStartAttr.addOnChange(onDateChange);
+            dateEndAttr.addOnChange(onDateChange);
         },
         onSave : function(context){
             var isEndBiggerThanStart = isEndDateBigger(context);
+
+            // Запрещать сохранение если срок кредита меньше года
             if (isEndBiggerThanStart == false) {
                 showAlert();
                 context.getEventArgs().preventDefault();

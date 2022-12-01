@@ -1,12 +1,11 @@
-﻿using Auto.App.Entities;
+﻿using System;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
-using System;
 
 namespace Auto.Plugins.cr34c_invoice.Serviseces
 {
     /// <summary>
-	/// 
+	/// Сервис отвечающий за бизнесс логику плагина PreInvoiceDelete
 	/// </summary>
     public class cr34c_DeleteInvoiceService
     {
@@ -17,35 +16,32 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        public void DeleteInvoice(EntityReference invoiceEntity)
+        public void DeleteInvoice(ITracingService ts, EntityReference invoiceEntity)
         {
-            var invoiceFromCrm = _service.Retrieve("cr34c_invoice", invoiceEntity.Id, new ColumnSet(App.Entities.cr34c_invoice.Fields.cr34c_dogovorid));
+            var invoiceFromCrm = _service.Retrieve("cr34c_invoice", invoiceEntity.Id, new ColumnSet("cr34c_dogovorid", "cr34c_fact", "cr34c_amount"));
 
-            var dogovorId = invoiceFromCrm.GetAttributeValue<EntityReference>("cr34c_dogovorid").Id;
+            var isPayed = invoiceFromCrm.GetAttributeValue<bool>("cr34c_fact");
 
-            var agrementFromCrm = _service.Retrieve("cr34c_agreement", dogovorId, new ColumnSet(
-                App.Entities.cr34c_agreement.Fields.cr34c_factsumma, 
-                App.Entities.cr34c_agreement.Fields.cr34c_summa, 
-                App.Entities.cr34c_agreement.Fields.cr34c_date));
-            
-            decimal factSumma = agrementFromCrm.Attributes.Contains("cr34c_factsumma")
-                ? agrementFromCrm.GetAttributeValue<Money>("cr34c_factsumma").Value
-                : new Money().Value = new decimal(0.0);
+            // Все изменения с договором в cлчае оплаты счета
+            if (isPayed)
+            {
+                var agreementId = invoiceFromCrm.GetAttributeValue<EntityReference>("cr34c_dogovorid").Id;
 
-            decimal amount = agrementFromCrm.Attributes.Contains("cr34c_factsumma") ?
-                invoiceFromCrm.GetAttributeValue<Money>("cr34c_amount").Value
-                : new Money().Value = new decimal(0.0);
+                var agrementFromCrm = _service.Retrieve("cr34c_agreement", agreementId, new ColumnSet("cr34c_factsumma", "cr34c_summa", "cr34c_date"));
 
-            // Уменьшение оплаченной суммы в договоре
-            var resultSumma = factSumma - amount;
+                var factSumma = agrementFromCrm.GetAttributeValue<Money>("cr34c_factsumma").Value;
 
-            var dogovorToUpdate = new Entity(agrementFromCrm.LogicalName, agrementFromCrm.Id);
+                var amount = invoiceFromCrm.GetAttributeValue<Money>("cr34c_amount").Value;
 
-            dogovorToUpdate["cr34c_factsumma"] = resultSumma;
+                // Уменьшение оплаченной суммы в договоре
+                var resultSumma = factSumma - amount;
 
-            _service.Update(dogovorToUpdate);
+                var agreementToUpdate = new Entity(agrementFromCrm.LogicalName, agrementFromCrm.Id);
 
+                agreementToUpdate["cr34c_factsumma"] = resultSumma;
 
+                _service.Update(agreementToUpdate);
+            }
         }
     }
 }

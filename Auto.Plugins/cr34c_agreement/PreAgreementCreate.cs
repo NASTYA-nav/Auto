@@ -1,12 +1,11 @@
-﻿using Auto.Plugins.cr34c_agreement.Services;
-using Auto.Plugins.cr34c_invoice.Serviseces;
+﻿using System;
+using Auto.Plugins.cr34c_agreement.Services;
 using Microsoft.Xrm.Sdk;
-using System;
 
 namespace Auto.Plugins.cr34c_agreement
 {
     /// <summary>
-	/// 
+	/// Плагин на событие пре-создания Договора
 	/// </summary>
     public sealed class PreAgreementCreate : IPlugin
     {

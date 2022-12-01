@@ -1,10 +1,13 @@
-﻿using Microsoft.Xrm.Sdk.Query;
-using Microsoft.Xrm.Sdk;
-using System;
+﻿using System;
 using System.Activities;
+using Microsoft.Xrm.Sdk;
+using Microsoft.Xrm.Sdk.Query;
 
 namespace Auto.Workflows.AgreementBilling.Services
 {
+    /// <summary>
+    /// Сервис отвечающий за бизнесс процесс CheckAgreementInvoiceActivity
+    /// </summary>
     public class CheckAgreementInvoiceService
     {
         private readonly IOrganizationService _service;

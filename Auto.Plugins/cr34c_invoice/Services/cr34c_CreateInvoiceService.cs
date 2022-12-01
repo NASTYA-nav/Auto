@@ -3,7 +3,7 @@
 namespace Auto.Plugins.cr34c_invoice.Serviseces
 {
     /// <summary>
-	/// 
+	/// Сервис отвечающий за бизнесс логику плагина PreInvoiceCreate
 	/// </summary>
     public class cr34c_CreateInvoiceService : BaseService
     {
@@ -18,7 +18,7 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
                 // Ручное создание если не установлен типсчета
                 invoiceEntity["cr34c_type"] = new OptionSetValue((int)InvoiceType.Manual);
             }
-
+          
             ChangeInvoice(invoiceEntity, tracingService);
         }
     }

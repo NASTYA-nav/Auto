@@ -13,17 +13,17 @@ Auto.cr34c_auto = (function() {
         var formContext = context.getFormContext();
         var usedAttr = formContext.getAttribute("cr34c_used").getValue();
         var km = formContext.getControl("cr34c_km");
-        var ownerscount = formContext.getControl("cr34c_ownerscount");
-        var isdamaged = formContext.getControl("cr34c_isdamaged");
+        var ownersCount = formContext.getControl("cr34c_ownerscount");
+        var isDamaged = formContext.getControl("cr34c_isdamaged");
 
         if (usedAttr == true) {
-            km.setVisible(true);
-            ownerscount.setVisible(true);
-            isdamaged.setVisible(true);
+            km == null ?? km.setVisible(true);
+            ownersCount == null ?? ownersCount.setVisible(true);
+            isDamaged == null ?? isDamaged.setVisible(true);
         } else {
-            km.setVisible(false);
-            ownerscount.setVisible(false);
-            isdamaged.setVisible(false);
+            km == null ?? km.setVisible(false);
+            ownersCount == null ?? ownersCount.setVisible(false);
+            isDamaged == null ?? isDamaged.setVisible(false);
         }
 
     }
@@ -37,6 +37,7 @@ Auto.cr34c_auto = (function() {
                 hideFields(context);
             }
 
+            // на изменение статуса Спробегом показывать или скрывать поля для пробега
             usedAttr.addOnChange( showUsedFields );
         }
     }

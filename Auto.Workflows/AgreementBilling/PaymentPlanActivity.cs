@@ -6,6 +6,9 @@ using Microsoft.Xrm.Sdk.Workflow;
 
 namespace Auto.Workflows.AgreementBilling
 {
+    /// <summary>
+    /// Бизнесс процесс на создание графика платежей
+    /// </summary>
     public class PaymentPlanActivity : CodeActivity
     {
         [Input("Agrement")]
@@ -23,10 +26,8 @@ namespace Auto.Workflows.AgreementBilling
 
             try
             {
-                service.Delete("cr34c_invoice", Guid.Parse("0a6357f8-816e-ed11-9560-000d3a6939ee"));
-                throw new Exception();
                 PaymentPlanService paymentService = new PaymentPlanService(service);
-                paymentService.CreatePayment(context, AgrementReference);
+                paymentService.CreatePayment(context, AgrementReference, tracingService);
             }
             catch (Exception exc)
             {

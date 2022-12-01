@@ -1,12 +1,11 @@
-﻿using Auto.Plugins.cr34c_invoice.Serviseces;
+﻿using System;
 using Microsoft.Xrm.Sdk;
-using System;
 
 namespace Auto.Plugins.cr34c_invoice
 {
     /// <summary>
-	/// 
-	/// </summary>
+    /// Базовый плагин с общей логикой для плагинов PreInvoiceCreate, PreInvoiceDelete, PreInvoiceUpdate
+    /// </summary>
     public abstract class BaseInvoicePlugin : IPlugin
     {
         public ITracingService TracingService { get; private set; }

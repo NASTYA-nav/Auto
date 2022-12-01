@@ -28,13 +28,12 @@ function OuterCall(formContext) {
         Xrm.WebApi.retrieveMultipleRecords("cr34c_credit", fetchXml).then(
             function success(result) {
                 for (var i in result.entities) {
-                    debugger;
                     var creditTableBody = $('#creditTableBody');
                     // Вызов нажатия сущьности в таблице
                     creditTableBody.append(`<tr>
                     <td><a href="#" onclick='onRecordClick("cr34c_credit", "${result.entities[i].cr34c_creditid}")'>${result.entities[i].cr34c_name}</a></td>
                     <td><a href="#" onclick='onRecordClick("cr34c_model", "${result.entities[i]["ca.cr34c_modelid"]}")'>${result.entities[i]["ca.cr34c_name"]}</a></td>
-                    <td>"${result.entities[i].creditperiod ?? null}"</td>
+                    <td>${result.entities[i].creditperiod ?? null}</td>
                     </tr>`);
                 }                  
             },

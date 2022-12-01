@@ -1,13 +1,12 @@
-﻿using Auto.Plugins.cr34c_communication.Services;
-using Auto.Plugins.cr34c_invoice.Serviseces;
+﻿using System;
+using Auto.Plugins.cr34c_communication.Services;
 using Microsoft.Xrm.Sdk;
-using System;
 
 namespace Auto.Plugins.cr34c_communication
 {
     /// <summary>
-	/// 
-	/// </summary>
+    /// Плагин на событие пре-создания Средства связи
+    /// </summary>
     public sealed class PreCommunicationCreate : IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)

@@ -1,13 +1,12 @@
-﻿using Auto.Plugins.cr34c_communication.Services;
+﻿using System;
+using Auto.Plugins.cr34c_communication.Services;
 using Microsoft.Xrm.Sdk;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Auto.Plugins.cr34c_communication
 {
+    /// <summary>
+	/// Плагин на событие пре-обновления Средства связи
+	/// </summary>
     public sealed class PreCommunicationUpdate : IPlugin
     {
         public void Execute(IServiceProvider serviceProvider)
@@ -23,7 +22,7 @@ namespace Auto.Plugins.cr34c_communication
             try
             {
                 cr34c_UpdateCommunicationService invoiceService = new cr34c_UpdateCommunicationService(service);
-                invoiceService.CreateCommunication((Entity)context.InputParameters["Target"]);
+                invoiceService.UpdateCommunication((Entity)context.InputParameters["Target"]);
             }
             catch (Exception exc)
             {

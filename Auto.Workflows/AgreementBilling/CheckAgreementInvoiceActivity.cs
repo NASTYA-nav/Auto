@@ -1,11 +1,14 @@
-﻿using Auto.Workflows.AgreementBilling.Services;
+﻿using System;
+using System.Activities;
+using Auto.Workflows.AgreementBilling.Services;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Workflow;
-using System;
-using System.Activities;
 
 namespace Auto.Workflows.AgreementBilling
 {
+    /// <summary>
+    /// Бизнесс процесс на проверку связки счетов с договором
+    /// </summary>
     public class CheckAgreementInvoiceActivity : CodeActivity
     {
         [Input("Agrement")]
@@ -19,8 +22,6 @@ namespace Auto.Workflows.AgreementBilling
         protected override void Execute(CodeActivityContext context)
         {
             var tracingService = context.GetExtension<ITracingService>();
-
-            var wfContext = context.GetExtension<IWorkflowContext>();
 
             var serviceFactory = context.GetExtension<IOrganizationServiceFactory>();
 

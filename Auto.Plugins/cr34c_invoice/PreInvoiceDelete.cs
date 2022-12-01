@@ -1,13 +1,12 @@
-﻿using Auto.Plugins.cr34c_invoice.Serviseces;
+﻿using System;
+using Auto.Plugins.cr34c_invoice.Serviseces;
 using Microsoft.Xrm.Sdk;
-using System;
-using System.Runtime.Remoting.Contexts;
 
 namespace Auto.Plugins.cr34c_invoice
 {
     /// <summary>
-	/// 
-	/// </summary>
+    /// Плагин на событие пре-удаления счета
+    /// </summary>
     public sealed class PreInvoiceDelete : BaseInvoicePlugin
     {
         public override void ExecuteInternal(IServiceProvider service)
@@ -17,7 +16,7 @@ namespace Auto.Plugins.cr34c_invoice
                 var target = (EntityReference)PluginExecutionContext.InputParameters["Target"];
 
                 cr34c_DeleteInvoiceService invoiceService = new cr34c_DeleteInvoiceService(OrganizationService);
-                invoiceService.DeleteInvoice(target);
+                invoiceService.DeleteInvoice(TracingService, target);
             }
             catch (Exception exc)
             {
