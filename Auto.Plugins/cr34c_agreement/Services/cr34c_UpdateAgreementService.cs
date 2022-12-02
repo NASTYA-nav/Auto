@@ -16,7 +16,7 @@ namespace Auto.Plugins.cr34c_agreement.Services
         /// <summary>
         /// Конструктор
         /// </summary>
-        /// <param name="service"></param>
+        /// <param name="service">Сервис</param>
         /// <exception cref="ArgumentNullException"></exception>
         public cr34c_UpdateAgreementService(IOrganizationService service)
         {
@@ -26,7 +26,7 @@ namespace Auto.Plugins.cr34c_agreement.Services
         /// <summary>
         /// Функция изменяет обьект договора
         /// </summary>
-        /// <param name="agreementEntity"></param>
+        /// <param name="agreementEntity">Договор</param>
         public void UpdateAgreement(Entity agreementEntity)
         {
             if (agreementEntity.Contains("cr34c_summa") 

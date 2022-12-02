@@ -18,7 +18,7 @@ namespace Auto.Plugins.cr34c_communication.Services
         /// <summary>
         /// Конструктор
         /// </summary>
-        /// <param name="service"></param>
+        /// <param name="service">Сервис</param>
         /// <exception cref="ArgumentNullException"></exception>
         public BaseService(IOrganizationService service)
         {
@@ -28,7 +28,7 @@ namespace Auto.Plugins.cr34c_communication.Services
         /// <summary>
         /// Проверяет контакт на наличие основного средства связи
         /// </summary>
-        /// <param name="entity"></param>
+        /// <param name="entity">Средство связи</param>
         /// <exception cref="InvalidPluginExecutionException"></exception>
         public void CheckCommunication(Entity entity)
         {

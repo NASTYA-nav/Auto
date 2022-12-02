@@ -15,9 +15,9 @@ namespace Auto.Plugins.cr34c_agreement.Services
         private readonly IOrganizationService _service;
 
         /// <summary>
-        /// 
+        /// Конструктор
         /// </summary>
-        /// <param name="service"></param>
+        /// <param name="service">Сервис</param>
         /// <exception cref="ArgumentNullException"></exception>
         public cr34c_CreateAgreementService(IOrganizationService service)
         {
@@ -27,7 +27,7 @@ namespace Auto.Plugins.cr34c_agreement.Services
         /// <summary>
         /// Функция, вызываемая при создании договора 
         /// </summary>
-        /// <param name="agreementEntity"></param>
+        /// <param name="agreementEntity">Договор</param>
         public void CreateAgreement(Entity agreementEntity)
         {
             if (agreementEntity.Contains("cr34c_date") && agreementEntity.Contains("cr34c_contact"))

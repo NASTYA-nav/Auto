@@ -12,7 +12,7 @@ namespace Auto.Plugins.cr34c_agreement
         /// <summary>
         /// Логика создания договора
         /// </summary>
-        /// <param name="serviceProvider"></param>
+        /// <param name="serviceProvider">Сервис провайдер</param>
         /// <exception cref="InvalidPluginExecutionException"></exception>
         public void Execute(IServiceProvider serviceProvider)
         {

@@ -10,7 +10,7 @@ namespace Auto.Plugins.cr34c_communication
     public sealed class PreCommunicationCreate : IPlugin
     {
         /// <summary>
-        /// 
+        /// Логика создания средства связи
         /// </summary>
         /// <param name="serviceProvider"></param>
         /// <exception cref="InvalidPluginExecutionException"></exception>
