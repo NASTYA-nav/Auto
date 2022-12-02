@@ -7,14 +7,21 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
 	/// </summary>
     public class cr34c_UpdateInvoiceService : BaseService
     {
+        /// <summary>
+        /// Конструктор 
+        /// </summary>
+        /// <param name="service">Сервис</param>
         public cr34c_UpdateInvoiceService(IOrganizationService service) : base(service)
         {
         }
 
-        // Метод вызываемый при обновлении счета
-        public void UpdateInvoice(Entity invoiceEntity, ITracingService ts)
+        /// <summary>
+        /// Метод вызываемый при обновлении счета
+        /// </summary>
+        /// <param name="invoiceEntity">Счет</param>
+        public void UpdateInvoice(Entity invoiceEntity)
         {
-            ChangeInvoice(invoiceEntity, ts);
+            ChangeInvoice(invoiceEntity);
         }
     }
 }

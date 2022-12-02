@@ -8,15 +8,25 @@ namespace Auto.Plugins.cr34c_invoice
     /// </summary>
     public abstract class BaseInvoicePlugin : IPlugin
     {
-        // Пишет в лог информацию для помощи в деббаге при исключении
+        /// <summary>
+        /// Пишет в лог информацию для помощи в деббаге при исключении
+        /// </summary>
         public ITracingService TracingService { get; private set; }
 
-        // Предоставляет доступ к контексту выполнения
-        public IPluginExecutionContext PluginExecutionContext { get; set; }
+        /// <summary>
+        /// Предоставляет доступ к контексту выполнения
+        /// </summary>
+        public IPluginExecutionContext PluginExecutionContext { get; private set; }
 
-        // Предоставляет доступ ко основным функциям dynamics
-        public IOrganizationService OrganizationService { get; set; }
+        /// <summary>
+        /// Предоставляет доступ ко основным функциям dynamics
+        /// </summary>
+        public IOrganizationService OrganizationService { get; private set; }
 
+        /// <summary>
+        /// Инициализация
+        /// </summary>
+        /// <param name="serviceProvider">Сервис провайдер</param>
         public void Execute(IServiceProvider serviceProvider)
         {
             TracingService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));

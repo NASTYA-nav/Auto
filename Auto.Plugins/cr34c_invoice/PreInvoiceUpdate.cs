@@ -10,6 +10,11 @@ namespace Auto.Plugins.cr34c_invoice
     /// </summary>
     public sealed class PreInvoiceUpdate : BaseInvoicePlugin
     {
+        /// <summary>
+        /// Логика изменения счета 
+        /// </summary>
+        /// <param name="service">Сервис</param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
         public override void ExecuteInternal(IServiceProvider service)
         {
             try
@@ -27,7 +32,7 @@ namespace Auto.Plugins.cr34c_invoice
                 if (isPayed)
                 {
                     cr34c_UpdateInvoiceService invoiceService = new cr34c_UpdateInvoiceService(OrganizationService);
-                    invoiceService.UpdateInvoice(target, TracingService);
+                    invoiceService.UpdateInvoice(target);
                 }
             }
             catch (Exception exc)

@@ -9,16 +9,26 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
 	/// </summary>
     public class BaseService
     {
-        // Предоставляет доступ ко основным функциям dynamics
+        /// <summary>
+        /// Предоставляет доступ ко основным функциям dynamics
+        /// </summary>
         private readonly IOrganizationService _service;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="service">Сервис</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public BaseService(IOrganizationService service)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // Базовый метод для изменения счета
-        public void ChangeInvoice(Entity invoiceEntity, ITracingService ts)
+        /// <summary>
+        /// Базовый метод для изменения счета
+        /// </summary>
+        /// <param name="invoiceEntity">Счет</param>
+        public void ChangeInvoice(Entity invoiceEntity)
         {
             // Проставляется дата оплаты текущая
             invoiceEntity["cr34c_paydate"] = DateTime.UtcNow;
@@ -39,12 +49,17 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
             if (invoiceEntity.Contains("cr34c_dogovorid")
                 || (invoiceFromCrm.Entities != null && invoiceFromCrm.Entities.Count != 0))
             {
-                ChangeFactSumma(invoiceEntity, invoiceFromCrm.Entities, ts);
+                ChangeFactSumma(invoiceEntity, invoiceFromCrm.Entities);
             }
         }
 
-        // Изменяется оплаченная сумма в договоре
-        private void ChangeFactSumma(Entity invoiceEntity, DataCollection<Entity> invoiceFromCrm, ITracingService ts)
+        /// <summary>
+        /// Изменяется оплаченная сумма в договоре
+        /// </summary>
+        /// <param name="invoiceEntity">Счет</param>
+        /// <param name="invoiceFromCrm">Счет из crm</param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
+        private void ChangeFactSumma(Entity invoiceEntity, DataCollection<Entity> invoiceFromCrm)
         {
             Guid agrementId;
             decimal amount;

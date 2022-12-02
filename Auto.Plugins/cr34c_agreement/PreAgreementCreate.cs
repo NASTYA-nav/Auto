@@ -9,6 +9,11 @@ namespace Auto.Plugins.cr34c_agreement
 	/// </summary>
     public sealed class PreAgreementCreate : IPlugin
     {
+        /// <summary>
+        /// Логика создания договора
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
         public void Execute(IServiceProvider serviceProvider)
         {
             // Пишет в лог информацию для помощи в деббаге при исключении
@@ -23,7 +28,7 @@ namespace Auto.Plugins.cr34c_agreement
             try
             {
                 cr34c_CreateAgreementService invoiceService = new cr34c_CreateAgreementService(service);
-                invoiceService.CreateAgreement((Entity)context.InputParameters["Target"], tracingService);
+                invoiceService.CreateAgreement((Entity)context.InputParameters["Target"]);
             }
             catch (Exception exc)
             {

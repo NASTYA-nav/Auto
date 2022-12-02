@@ -9,6 +9,11 @@ namespace Auto.Plugins.cr34c_invoice
     /// </summary>
     public sealed class PreInvoiceCreate : BaseInvoicePlugin
     {
+        /// <summary>
+        /// Логика создания счета
+        /// </summary>
+        /// <param name="service">Сервис</param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
         public override void ExecuteInternal(IServiceProvider service)
         {
             try

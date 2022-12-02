@@ -3,7 +3,7 @@
 	/// <summary>
 	/// Типы средств связи лукапа
 	/// </summary>
-	enum CommunicationType
+	public enum CommunicationType
 	{
 		Phone = 290040000,
 		Email = 290040001

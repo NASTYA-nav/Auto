@@ -11,15 +11,26 @@ namespace Auto.Workflows.AgreementBilling.Services
     /// </summary>
     public class PaymentPlanService
     {
-        // Предоставляет доступ ко основным функциям dynamics
+        /// <summary>
+        /// Предоставляет доступ ко основным функциям dynamics
+        /// </summary>
         private readonly IOrganizationService _service;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="service">Сервис</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public PaymentPlanService(IOrganizationService service)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // Метод вызываемый бизнесс процессом для создания графика платежей
+        /// <summary>
+        /// Метод вызываемый бизнесс процессом для создания графика платежей
+        /// </summary>
+        /// <param name="context">Контекст</param>
+        /// <param name="AgrementReference">Договор</param>
         public void CreatePayment(CodeActivityContext context, InArgument<EntityReference> AgrementReference)
         {
             var agrementRef = AgrementReference.Get(context);
@@ -38,7 +49,11 @@ namespace Auto.Workflows.AgreementBilling.Services
             }
         }
 
-        // Проверка возможно ли создание графика платежей
+        /// <summary>
+        /// Проверка возможно ли создание графика платежей
+        /// </summary>
+        /// <param name="agrementRefId">Id договора</param>
+        /// <returns></returns>
         private bool CanCreatePayment(Guid agrementRefId)
         {
             var canCreatePayment = true;
@@ -77,7 +92,11 @@ namespace Auto.Workflows.AgreementBilling.Services
             return canCreatePayment;
         }
 
-        // Устанавливает дату графика платежей договору
+        /// <summary>
+        /// Устанавливает дату графика платежей договору
+        /// </summary>
+        /// <param name="agrementRefName">Логическое навание сущьности договор</param>
+        /// <param name="agrementRefId">Id договора</param>
         private void SetPaymentPlanDate(string agrementRefName, Guid agrementRefId)
         {
             Entity agreementToUpdate = new Entity(agrementRefName, agrementRefId);
@@ -88,7 +107,10 @@ namespace Auto.Workflows.AgreementBilling.Services
             _service.Update(agreementToUpdate);
         }
 
-        // Удаляет связанные с договором автоматически созданные счета
+        /// <summary>
+        /// Удаляет связанные с договором автоматически созданные счета
+        /// </summary>
+        /// <param name="agrementRefId">Id договора</param>
         private void DeleteAgrementAutoInvoices(Guid agrementRefId)
         {
             var query = new QueryExpression("cr34c_invoice");
@@ -114,7 +136,12 @@ namespace Auto.Workflows.AgreementBilling.Services
             }
         }
 
-        // Создание графика платежей
+        /// <summary>
+        /// Создание графика платежей
+        /// </summary>
+        /// <param name="agrementRefName">Логическое навание сущьности договор</param>
+        /// <param name="agrementRefId">Id договора</param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
         private void CreatePaymentPlan(string agrementRefName, Guid agrementRefId)
         {
             var columnSet = new ColumnSet("cr34c_creditperiod", "cr34c_creditamount");

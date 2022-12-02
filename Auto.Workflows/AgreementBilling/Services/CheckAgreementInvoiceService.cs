@@ -10,16 +10,29 @@ namespace Auto.Workflows.AgreementBilling.Services
     /// </summary>
     public class CheckAgreementInvoiceService
     {
-        // Предоставляет доступ ко основным функциям dynamics
+        /// <summary>
+        /// Предоставляет доступ ко основным функциям dynamics
+        /// </summary>
         private readonly IOrganizationService _service;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="service">Сервис</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public CheckAgreementInvoiceService(IOrganizationService service)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // Метод для проверки есть ли связанные с договором счета
-        public void CheckAgreement(CodeActivityContext context, OutArgument<bool> IsContainsInvoice, InArgument<EntityReference> AgrementReference)
+        /// <summary>
+        /// Проверяет есть ли у договора счета, если нет то устанавливать исходящий параметр IsContainsInvoice,
+        /// в заисимости от значения
+        /// </summary>
+        /// <param name="context">Контекст</param>
+        /// <param name="IsContainsInvoice">Наличие счетов</param>
+        /// <param name="AgrementReference">Договор</param>
+        public void CheckAndSetAgreement(CodeActivityContext context, OutArgument<bool> IsContainsInvoice, InArgument<EntityReference> AgrementReference)
         {
             var agrementRef = AgrementReference.Get(context);
 

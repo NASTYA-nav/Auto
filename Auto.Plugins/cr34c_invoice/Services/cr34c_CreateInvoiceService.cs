@@ -8,11 +8,19 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
 	/// </summary>
     public class cr34c_CreateInvoiceService : BaseService
     {
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="service">Сервис</param>
         public cr34c_CreateInvoiceService(IOrganizationService service) : base(service)
         {
         }
 
-        // Метод вызываемый при создании счета
+        /// <summary>
+        /// Метод вызываемый при создании счета
+        /// </summary>
+        /// <param name="tracingService"></param>
+        /// <param name="invoiceEntity"></param>
         public void CreateInvoice(ITracingService tracingService, Entity invoiceEntity)
         {
             if (!invoiceEntity.Contains("cr34c_type"))

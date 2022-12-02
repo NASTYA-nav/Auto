@@ -9,6 +9,11 @@ namespace Auto.Plugins.cr34c_agreement
 	/// </summary>
     public sealed class PreAgreementUpdate : IPlugin
     {
+        /// <summary>
+        /// Логика изменения договора
+        /// </summary>
+        /// <param name="serviceProvider"></param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
         public void Execute(IServiceProvider serviceProvider)
         {
             // Пишет в лог информацию для помощи в деббаге при исключении

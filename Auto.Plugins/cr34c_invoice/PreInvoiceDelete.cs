@@ -9,6 +9,11 @@ namespace Auto.Plugins.cr34c_invoice
     /// </summary>
     public sealed class PreInvoiceDelete : BaseInvoicePlugin
     {
+        /// <summary>
+        /// Логика удаления счета
+        /// </summary>
+        /// <param name="service">Сервис</param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
         public override void ExecuteInternal(IServiceProvider service)
         {
             try
@@ -16,7 +21,7 @@ namespace Auto.Plugins.cr34c_invoice
                 var target = (EntityReference)PluginExecutionContext.InputParameters["Target"];
 
                 cr34c_DeleteInvoiceService invoiceService = new cr34c_DeleteInvoiceService(OrganizationService);
-                invoiceService.DeleteInvoice(TracingService, target);
+                invoiceService.DeleteInvoice(target);
             }
             catch (Exception exc)
             {

@@ -8,15 +8,25 @@ namespace Auto.Plugins.cr34c_agreement.Services
 	/// </summary>
     internal class cr34c_UpdateAgreementService
     {
-        // Предоставляет доступ ко основным функциям dynamics
+        /// <summary>
+        /// Предоставляет доступ ко основным функциям dynamics
+        /// </summary>
         private readonly IOrganizationService _service;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="service"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public cr34c_UpdateAgreementService(IOrganizationService service)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // Функция изменяет обьект договора
+        /// <summary>
+        /// Функция изменяет обьект договора
+        /// </summary>
+        /// <param name="agreementEntity"></param>
         public void UpdateAgreement(Entity agreementEntity)
         {
             if (agreementEntity.Contains("cr34c_summa") 

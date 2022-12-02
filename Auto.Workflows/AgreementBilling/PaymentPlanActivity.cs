@@ -11,12 +11,19 @@ namespace Auto.Workflows.AgreementBilling
     /// </summary>
     public class PaymentPlanActivity : CodeActivity
     {
-        // Входящий параметр Договор
+        /// <summary>
+        /// Входящий параметр Договор
+        /// </summary>
         [Input("Agrement")]
         [RequiredArgument]
         [ReferenceTarget("cr34c_agreement")]
         public InArgument<EntityReference> AgrementReference { get; set; }
 
+        /// <summary>
+        /// Логика создания графика платежей
+        /// </summary>
+        /// <param name="context">Контекст</param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
         protected override void Execute(CodeActivityContext context)
         {
             // Пишет в лог информацию для помощи в деббаге при исключении

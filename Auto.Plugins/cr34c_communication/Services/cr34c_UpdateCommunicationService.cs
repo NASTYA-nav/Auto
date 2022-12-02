@@ -7,11 +7,18 @@ namespace Auto.Plugins.cr34c_communication.Services
     /// </summary>
     public class cr34c_UpdateCommunicationService : BaseService
     {
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="service"></param>
         public cr34c_UpdateCommunicationService(IOrganizationService service) : base(service)
         {
         }
 
-        // Вызов базового метода для проверки контакта при изменении средства связи
+        /// <summary>
+        /// Вызов базового метода для проверки контакта при изменении средства связи
+        /// </summary>
+        /// <param name="entity"></param>
         public void UpdateCommunication(Entity entity)
         {
             CheckCommunication(entity);

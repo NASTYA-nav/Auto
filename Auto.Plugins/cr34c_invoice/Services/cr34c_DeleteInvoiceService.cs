@@ -11,13 +11,21 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
     {
         private readonly IOrganizationService _service;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="service">Сервис</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public cr34c_DeleteInvoiceService(IOrganizationService service)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // Метод вызываемый при удалении счета
-        public void DeleteInvoice(ITracingService ts, EntityReference invoiceEntity)
+        /// <summary>
+        /// Метод вызываемый при удалении счета
+        /// </summary>
+        /// <param name="invoiceEntity">Счет</param>
+        public void DeleteInvoice(EntityReference invoiceEntity)
         {
             var invoiceFromCrm = _service.Retrieve("cr34c_invoice", invoiceEntity.Id, new ColumnSet("cr34c_dogovorid", "cr34c_fact", "cr34c_amount"));
 

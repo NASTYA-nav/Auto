@@ -10,15 +10,26 @@ namespace Auto.Plugins.cr34c_communication.Services
 	/// </summary>
     public class BaseService
     {
-        // Предоставляет доступ ко основным функциям dynamics
+        /// <summary>
+        /// Предоставляет доступ ко основным функциям dynamics
+        /// </summary>
         private readonly IOrganizationService _service;
-
+        
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="service"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public BaseService(IOrganizationService service)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // Проверяет контакт на наличие основного средства связи
+        /// <summary>
+        /// Проверяет контакт на наличие основного средства связи
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
         public void CheckCommunication(Entity entity)
         {
             if (entity.Contains("cr34c_contactid") && entity["cr34c_contactid"] != null
@@ -44,7 +55,12 @@ namespace Auto.Plugins.cr34c_communication.Services
             }
         }
 
-        // Проверяет есть ли уже у контакта данный тип средства связи как основной
+        /// <summary>
+        /// Проверяет есть ли уже у контакта данный тип средства связи как основной
+        /// </summary>
+        /// <param name="contactId"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
         private bool IsMainCommunicationExist(Guid contactId, CommunicationType type)
         {
             var communicationExist = false;

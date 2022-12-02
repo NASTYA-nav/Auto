@@ -11,16 +11,25 @@ namespace Auto.Workflows.AgreementBilling
     /// </summary>
     public class CheckAgreementInvoiceActivity : CodeActivity
     {
-        // Входной параметр Договор
+        /// <summary>
+        /// Входной параметр Договор
+        /// </summary>
         [Input("Agrement")]
         [RequiredArgument]
         [ReferenceTarget("cr34c_agreement")]
         public InArgument<EntityReference> AgrementReference { get; set; }
 
-        // Исходщий параметр факт наличия у договора счетов
+        /// <summary>
+        /// Исходщий параметр факт наличия у договора счетов
+        /// </summary>
         [Output("Is agreement has invoice")]
         public OutArgument<bool> IsContainsInvoice { get; set; }
 
+        /// <summary>
+        /// Логика проверки есть ли у договора счета
+        /// </summary>
+        /// <param name="context">Контекст</param>
+        /// <exception cref="InvalidPluginExecutionException"></exception>
         protected override void Execute(CodeActivityContext context)
         {
             // Пишет в лог информацию для помощи в деббаге при исключении
@@ -33,7 +42,7 @@ namespace Auto.Workflows.AgreementBilling
             try
             {
                 CheckAgreementInvoiceService agreementService = new CheckAgreementInvoiceService(service);
-                agreementService.CheckAgreement(context, IsContainsInvoice, AgrementReference);
+                agreementService.CheckAndSetAgreement(context, IsContainsInvoice, AgrementReference);
             }
             catch (Exception exc)
             {

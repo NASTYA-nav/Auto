@@ -9,24 +9,29 @@ namespace Auto.Plugins.cr34c_agreement.Services
 	/// </summary>
     internal class cr34c_CreateAgreementService
     {
-        // Предоставляет доступ ко основным функциям dynamics
+        /// <summary>
+        /// Предоставляет доступ ко основным функциям dynamics
+        /// </summary>
         private readonly IOrganizationService _service;
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="service"></param>
+        /// <exception cref="ArgumentNullException"></exception>
         public cr34c_CreateAgreementService(IOrganizationService service)
         {
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // Функция, вызываемая при создании договора 
-        public void CreateAgreement(Entity agreementEntity, ITracingService ts)
+        /// <summary>
+        /// Функция, вызываемая при создании договора 
+        /// </summary>
+        /// <param name="agreementEntity"></param>
+        public void CreateAgreement(Entity agreementEntity)
         {
             if (agreementEntity.Contains("cr34c_date") && agreementEntity.Contains("cr34c_contact"))
             {
-                ts.Trace("1!");
-
-                var date = (DateTime)agreementEntity["cr34c_date"];
-                ts.Trace("2! " + date);
-
                 var contactId = agreementEntity.GetAttributeValue<EntityReference>("cr34c_contact").Id;
 
                 var query = new QueryExpression("cr34c_agreement");
