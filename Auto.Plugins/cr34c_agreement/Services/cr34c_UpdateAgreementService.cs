@@ -8,6 +8,7 @@ namespace Auto.Plugins.cr34c_agreement.Services
 	/// </summary>
     internal class cr34c_UpdateAgreementService
     {
+        // Предоставляет доступ ко основным функциям dynamics
         private readonly IOrganizationService _service;
 
         public cr34c_UpdateAgreementService(IOrganizationService service)
@@ -15,7 +16,7 @@ namespace Auto.Plugins.cr34c_agreement.Services
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // Изменяет обьект договора
+        // Функция изменяет обьект договора
         public void UpdateAgreement(Entity agreementEntity)
         {
             if (agreementEntity.Contains("cr34c_summa") 

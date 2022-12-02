@@ -1,4 +1,5 @@
 ﻿using System;
+using Auto.Plugins.cr34c_communication.Enums;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
@@ -9,6 +10,7 @@ namespace Auto.Plugins.cr34c_communication.Services
 	/// </summary>
     public class BaseService
     {
+        // Предоставляет доступ ко основным функциям dynamics
         private readonly IOrganizationService _service;
 
         public BaseService(IOrganizationService service)
@@ -16,7 +18,7 @@ namespace Auto.Plugins.cr34c_communication.Services
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // Проверяет контакта на наличие основного средства связи
+        // Проверяет контакт на наличие основного средства связи
         public void CheckCommunication(Entity entity)
         {
             if (entity.Contains("cr34c_contactid") && entity["cr34c_contactid"] != null

@@ -16,6 +16,7 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
+        // Метод вызываемый при удалении счета
         public void DeleteInvoice(ITracingService ts, EntityReference invoiceEntity)
         {
             var invoiceFromCrm = _service.Retrieve("cr34c_invoice", invoiceEntity.Id, new ColumnSet("cr34c_dogovorid", "cr34c_fact", "cr34c_amount"));
@@ -38,6 +39,7 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
 
                 var agreementToUpdate = new Entity(agrementFromCrm.LogicalName, agrementFromCrm.Id);
 
+                // Обновление оплаченной суммы договору
                 agreementToUpdate["cr34c_factsumma"] = resultSumma;
 
                 _service.Update(agreementToUpdate);

@@ -8,6 +8,7 @@ namespace Auto.Plugins.cr34c_invoice
     /// </summary>
     public abstract class BaseInvoicePlugin : IPlugin
     {
+        // Пишет в лог информацию для помощи в деббаге при исключении
         public ITracingService TracingService { get; private set; }
 
         public IPluginExecutionContext PluginExecutionContext { get; set; }

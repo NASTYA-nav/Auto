@@ -1,4 +1,5 @@
-﻿using Microsoft.Xrm.Sdk;
+﻿using Auto.Plugins.cr34c_invoice.Enums;
+using Microsoft.Xrm.Sdk;
 
 namespace Auto.Plugins.cr34c_invoice.Serviseces
 {
@@ -11,6 +12,7 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
         {
         }
 
+        // Метод вызываемый при создании счета
         public void CreateInvoice(ITracingService tracingService, Entity invoiceEntity)
         {
             if (!invoiceEntity.Contains("cr34c_type"))

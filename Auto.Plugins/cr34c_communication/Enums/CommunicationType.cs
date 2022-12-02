@@ -1,6 +1,11 @@
-﻿// Типы средств связи лукапа
-enum CommunicationType
+﻿namespace Auto.Plugins.cr34c_communication.Enums
 {
-	Phone = 290040000,
-	Email = 290040001
+	/// <summary>
+	/// Типы средств связи лукапа
+	/// </summary>
+	enum CommunicationType
+	{
+		Phone = 290040000,
+		Email = 290040001
+	}
 }

@@ -11,6 +11,7 @@ namespace Auto.Plugins.cr34c_communication.Services
         {
         }
 
+        // Вызов базового метода для проверки контакта при создании средства связи
         public void CreateCommunication(Entity entity)
         {
             CheckCommunication(entity);

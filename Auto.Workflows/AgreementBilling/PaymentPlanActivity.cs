@@ -11,6 +11,7 @@ namespace Auto.Workflows.AgreementBilling
     /// </summary>
     public class PaymentPlanActivity : CodeActivity
     {
+        // Входящий параметр Договор
         [Input("Agrement")]
         [RequiredArgument]
         [ReferenceTarget("cr34c_agreement")]
@@ -18,6 +19,7 @@ namespace Auto.Workflows.AgreementBilling
 
         protected override void Execute(CodeActivityContext context)
         {
+            // Пишет в лог информацию для помощи в деббаге при исключении
             var tracingService = context.GetExtension<ITracingService>();
 
             var serviceFactory = context.GetExtension<IOrganizationServiceFactory>();
@@ -27,7 +29,7 @@ namespace Auto.Workflows.AgreementBilling
             try
             {
                 PaymentPlanService paymentService = new PaymentPlanService(service);
-                paymentService.CreatePayment(context, AgrementReference, tracingService);
+                paymentService.CreatePayment(context, AgrementReference);
             }
             catch (Exception exc)
             {

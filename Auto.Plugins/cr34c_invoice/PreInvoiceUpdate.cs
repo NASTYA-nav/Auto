@@ -18,6 +18,7 @@ namespace Auto.Plugins.cr34c_invoice
 
                 var invoiceFromCrm = OrganizationService.Retrieve("cr34c_invoice", target.Id, new ColumnSet("cr34c_fact"));
 
+                // Берем из crm факт оплаты, если нет в контексте
                 var isPayed = target.Contains("cr34c_dogovorid")
                     ? target.GetAttributeValue<bool>("cr34c_fact")
                     : invoiceFromCrm.GetAttributeValue<bool>("cr34c_fact");

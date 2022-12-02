@@ -11,16 +11,19 @@ namespace Auto.Workflows.AgreementBilling
     /// </summary>
     public class CheckAgreementInvoiceActivity : CodeActivity
     {
+        // Входной параметр Договор
         [Input("Agrement")]
         [RequiredArgument]
         [ReferenceTarget("cr34c_agreement")]
         public InArgument<EntityReference> AgrementReference { get; set; }
 
+        // Исходщий параметр факт наличия у договора счетов
         [Output("Is agreement has invoice")]
         public OutArgument<bool> IsContainsInvoice { get; set; }
 
         protected override void Execute(CodeActivityContext context)
         {
+            // Пишет в лог информацию для помощи в деббаге при исключении
             var tracingService = context.GetExtension<ITracingService>();
 
             var serviceFactory = context.GetExtension<IOrganizationServiceFactory>();

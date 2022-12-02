@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Activities;
+using Auto.Workflows.AgreementBilling.Enums;
 using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Sdk.Query;
 
@@ -10,6 +11,7 @@ namespace Auto.Workflows.AgreementBilling.Services
     /// </summary>
     public class PaymentPlanService
     {
+        // Предоставляет доступ ко основным функциям dynamics
         private readonly IOrganizationService _service;
 
         public PaymentPlanService(IOrganizationService service)
@@ -17,25 +19,26 @@ namespace Auto.Workflows.AgreementBilling.Services
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        public void CreatePayment(CodeActivityContext context, InArgument<EntityReference> AgrementReference, ITracingService ts)
+        // Метод вызываемый бизнесс процессом для создания графика платежей
+        public void CreatePayment(CodeActivityContext context, InArgument<EntityReference> AgrementReference)
         {
-
             var agrementRef = AgrementReference.Get(context);
 
             // Если у договора есть оплаченный счет или ручной счет
             if (CanCreatePayment(agrementRef.Id))
             {
                 // Удаление автоматически созданных счетов у договора
-                DeleteAgrementAutoInvoices(agrementRef.Id, ts);
+                DeleteAgrementAutoInvoices(agrementRef.Id);
 
                 // Создание графика платежей
-                CreatePaymentPlan(agrementRef.LogicalName, agrementRef.Id, ts);
+                CreatePaymentPlan(agrementRef.LogicalName, agrementRef.Id);
 
                 // Устанавливаем поле график платежей
                 SetPaymentPlanDate(agrementRef.LogicalName, agrementRef.Id);
             }
         }
 
+        // Проверка возможно ли создание графика платежей
         private bool CanCreatePayment(Guid agrementRefId)
         {
             var canCreatePayment = true;
@@ -74,6 +77,7 @@ namespace Auto.Workflows.AgreementBilling.Services
             return canCreatePayment;
         }
 
+        // Устанавливает дату графика платежей договору
         private void SetPaymentPlanDate(string agrementRefName, Guid agrementRefId)
         {
             Entity agreementToUpdate = new Entity(agrementRefName, agrementRefId);
@@ -84,10 +88,10 @@ namespace Auto.Workflows.AgreementBilling.Services
             _service.Update(agreementToUpdate);
         }
 
-        private void DeleteAgrementAutoInvoices(Guid agrementRefId, ITracingService ts)
+        // Удаляет связанные с договором автоматически созданные счета
+        private void DeleteAgrementAutoInvoices(Guid agrementRefId)
         {
             var query = new QueryExpression("cr34c_invoice");
-            ts.Trace("query!!!!!!!!!");
             query.ColumnSet.AddColumns("cr34c_dogovorid", "cr34c_type");
 
             var filter = new FilterExpression(LogicalOperator.And);
@@ -99,29 +103,23 @@ namespace Auto.Workflows.AgreementBilling.Services
             query.Criteria.AddFilter(filter);
 
             var results = _service.RetrieveMultiple(query);
-            ts.Trace("results1!!!" + results.Entities.Count);
 
             // Удалить все связанные с договором счета с типом=[Автоматически]
             if (results.Entities != null && results.Entities.Count != 0) 
             {
-                ts.Trace("Entities");
-
                 foreach (var invoice in results.Entities)
                 {
-                    ts.Trace("invoice" + invoice.LogicalName + invoice.Id);
-
                     _service.Delete(invoice.LogicalName, invoice.Id);
                 }
             }
         }
 
-        private void CreatePaymentPlan(string agrementRefName, Guid agrementRefId, ITracingService ts)
+        // Создание графика платежей
+        private void CreatePaymentPlan(string agrementRefName, Guid agrementRefId)
         {
             var columnSet = new ColumnSet("cr34c_creditperiod", "cr34c_creditamount");
-            ts.Trace("Entities");
 
             var agreementFromCrm = _service.Retrieve(agrementRefName, agrementRefId, columnSet);
-            ts.Trace("Entities");
 
             int creditPeriod;
 
@@ -132,7 +130,6 @@ namespace Auto.Workflows.AgreementBilling.Services
                 && agreementFromCrm.Contains("cr34c_creditamount")
                 && agreementFromCrm.GetAttributeValue<Money>("cr34c_creditamount").Value >= new decimal(0))
             {
-                ts.Trace("Entities");
 
                 creditPeriod = agreementFromCrm.GetAttributeValue<int>("cr34c_creditperiod");
                 creditAmount = agreementFromCrm.GetAttributeValue<Money>("cr34c_creditamount").Value;
@@ -146,7 +143,6 @@ namespace Auto.Workflows.AgreementBilling.Services
             // Сумма ежемесячного платежа
             var amount = creditAmount / (creditPeriod * 12);
             var paydate = DateTime.UtcNow;
-            ts.Trace("Entities" + amount);
 
             Entity invoiceToCreate = new Entity("cr34c_invoice");
 
@@ -155,18 +151,13 @@ namespace Auto.Workflows.AgreementBilling.Services
             invoiceToCreate["cr34c_dogovorid"] = new EntityReference(agrementRefName, agrementRefId);
             invoiceToCreate["cr34c_type"] = new OptionSetValue((int)InvoiceType.Auto);
             invoiceToCreate["cr34c_amount"] = amount;
-            ts.Trace("Entities" + invoicesCount);
 
-            // Создание счетов на каждый месяц всего периода кредита договора
+            // Создание счетов на каждый месяц всего периода кредита
             while (invoicesCount > 0)
             {
-                ts.Trace("Entities" + invoicesCount);
-
                 invoiceToCreate["cr34c_paydate"] = paydate;
-                ts.Trace("Entities" + invoicesCount);
 
                 _service.Create(invoiceToCreate);
-                ts.Trace("Entities" + invoicesCount);
 
                 paydate.AddMonths(1);
                 invoicesCount--;

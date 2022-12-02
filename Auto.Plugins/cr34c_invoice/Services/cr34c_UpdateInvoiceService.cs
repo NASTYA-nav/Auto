@@ -11,6 +11,7 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
         {
         }
 
+        // Метод вызываемый при обновлении счета
         public void UpdateInvoice(Entity invoiceEntity, ITracingService ts)
         {
             ChangeInvoice(invoiceEntity, ts);

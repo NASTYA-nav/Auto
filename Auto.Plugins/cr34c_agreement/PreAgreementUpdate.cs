@@ -11,7 +11,8 @@ namespace Auto.Plugins.cr34c_agreement
     {
         public void Execute(IServiceProvider serviceProvider)
         {
-            var ts = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
+            // Пишет в лог информацию для помощи в деббаге при исключении
+            var tracingService = (ITracingService)serviceProvider.GetService(typeof(ITracingService));
 
             IPluginExecutionContext context = (IPluginExecutionContext)serviceProvider.GetService(typeof(IPluginExecutionContext));
 
@@ -26,7 +27,7 @@ namespace Auto.Plugins.cr34c_agreement
             }
             catch (Exception exc)
             {
-                ts.Trace(exc.ToString());
+                tracingService.Trace(exc.ToString());
                 throw new InvalidPluginExecutionException(exc.Message);
             }
         }

@@ -9,6 +9,7 @@ namespace Auto.Plugins.cr34c_agreement.Services
 	/// </summary>
     internal class cr34c_CreateAgreementService
     {
+        // Предоставляет доступ ко основным функциям dynamics
         private readonly IOrganizationService _service;
 
         public cr34c_CreateAgreementService(IOrganizationService service)
@@ -16,7 +17,7 @@ namespace Auto.Plugins.cr34c_agreement.Services
             _service = service ?? throw new ArgumentNullException(nameof(service));
         }
 
-        // При создании договора 
+        // Функция, вызываемая при создании договора 
         public void CreateAgreement(Entity agreementEntity, ITracingService ts)
         {
             if (agreementEntity.Contains("cr34c_date") && agreementEntity.Contains("cr34c_contact"))

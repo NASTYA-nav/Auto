@@ -1,6 +1,11 @@
-﻿// Типы лукапа счета
-enum InvoiceType
+﻿namespace Auto.Workflows.AgreementBilling.Enums
 {
-    Manual = 290040000,
-    Auto = 290040001
+    /// <summary>
+    /// Типы лукапа счета
+    /// </summary>
+    enum InvoiceType
+    {
+        Manual = 290040000,
+        Auto = 290040001
+    }
 }
