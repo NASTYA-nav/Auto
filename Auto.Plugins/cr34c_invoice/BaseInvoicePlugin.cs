@@ -11,8 +11,10 @@ namespace Auto.Plugins.cr34c_invoice
         // Пишет в лог информацию для помощи в деббаге при исключении
         public ITracingService TracingService { get; private set; }
 
+        // Предоставляет доступ к контексту выполнения
         public IPluginExecutionContext PluginExecutionContext { get; set; }
 
+        // Предоставляет доступ ко основным функциям dynamics
         public IOrganizationService OrganizationService { get; set; }
 
         public void Execute(IServiceProvider serviceProvider)
