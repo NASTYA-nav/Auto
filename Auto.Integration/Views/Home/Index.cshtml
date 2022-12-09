@@ -1,0 +1,25 @@
+﻿@model List<Auto.Integration.Models.AutoBrand>
+@{
+    ViewBag.Title = "Home Page";
+}
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col">
+                Название
+            </div>
+        </div>
+    </div>
+    <ul class="list-group list-group-flush">
+        @foreach (var obj in Model)
+        {
+            <li class="list-group-item">
+                <div class="row">
+                    <div class="col">
+                        <h7>@obj.Name</h7>
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+</div>

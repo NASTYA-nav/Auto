@@ -29,7 +29,7 @@ namespace Auto.Plugins.cr34c_invoice.Serviseces
                 invoiceEntity["cr34c_type"] = new OptionSetValue((int)InvoiceType.Manual);
             }
           
-            ChangeInvoice(invoiceEntity, tracingService);
+            ChangeInvoice(invoiceEntity);
         }
     }
 }
